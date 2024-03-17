@@ -43,6 +43,16 @@ menuButton.add(KeyboardButton("Back"))
 
 orderButton = ReplyKeyboardMarkup(resize_keyboard=True)
 query = "SELECT * FROM orders"
-for i in Database.connect(query,"select"):
+for i in Database.connect(query, "select"):
     orderButton.add(KeyboardButton(i[1]))
 orderButton.add(KeyboardButton("Back"))
+
+
+settingButton = ReplyKeyboardMarkup(resize_keyboard=True)
+settingButton.add(KeyboardButton("Change language"))
+settingButton.add(KeyboardButton("Back"))
+
+
+feedbackButton = ReplyKeyboardMarkup(resize_keyboard=True)
+feedbackButton.add(KeyboardButton("📲Phone number"))
+feedbackButton.add(KeyboardButton("Back"))
