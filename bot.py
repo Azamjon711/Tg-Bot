@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from database import Database
 from buttons import mainButton, menuButton, orderButton, settingButton, feedbackButton
-from keyboard import keyButton
+from keyboard import keyButton,addNewAdminButton
 
 load_dotenv()
 
@@ -114,6 +114,23 @@ async def beveragesImage(message: types.Message):
     urlPhoto = "https://avatars.mds.yandex.net/i?id=4d9a5be1624e8db93456e542e5bc4be9acccbcc3-12521952-images-thumbs&n=13"
     caption = "Beverages:"
     await bot.send_photo(message.chat.id, photo=urlPhoto, caption=caption)
+
+
+@dp.message_handler(commands=['admin'])
+async def adminCommand(message: types.Message):
+    admins = []
+    query = """SELECT * FROM admins"""
+    for i in Database.connect(query, "select"):
+        admins.append(i[1])
+    if message.from_user.id in admins:
+        await message.reply("Hello admin")
+    else:
+        await message.reply("Bunday buyruq turi mavjud emas")
+
+
+@dp.message_handler(commands="add_new_admin")
+async def addNewAdmin(message: types.Message):
+    await message.reply("Yangi admin qo'shish", reply_markup=addNewAdminButton)
 
 
 if __name__ == "__main__":
